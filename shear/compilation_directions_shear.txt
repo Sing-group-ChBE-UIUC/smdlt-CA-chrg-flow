@@ -1,0 +1,77 @@
+############################### Project Title ###############################
+
+Dilute/Conformationally Averaged/Charged (smdlt-CA-chrg-PSF) Simulation 
+
+-Written by Charlie D. Young and Dejuante W. Walker and Neha Tyagi
+
+############################### Description ##############################
+
+Conformationally averaged Brownian Dynamics simulation of a semi-dilute redox active polymer in the bulk solution phase of shear flow using deforming-brick boundary conditions
+
+############################### Dependencies ###############################
+
+1. Intel MKL Package (pre-installed on computer)
+2. main27.c
+3. main.h
+4. gridHI.c
+5. gridHI.h
+6. Initialization.c
+7. Initialization.h
+8. Parameters.h
+9. Input.txt
+10. Makefile
+11. "prop" folder
+12. "mm" folder
+13. "txt" folder
+14. "xyz" folder
+15. "res" folder
+16. "decomp" folder
+17. "bin" folder
+18. "build" folder 
+
+############################### Executing Program ###############################
+
+1. Make sure all dependencies are in same directory
+
+2. Create the grid executable:
+	a. Run: 
+		icc -O3 -qopenmp -mkl -o grid.out gridHI.c
+
+3. Run the grid calculation:
+	a. Run: 
+
+		./grid.out -c 1 -b 50 -a 10 -p 1 -n 4 -f 0.01 -s 8 -g 2.0
+	
+	b. Parameters: polymer concentration(-c) # of monomers(-b) # of chains(-a) trajectory #(-p) num_threads(-n) strain rate of flow(-f) # of flow frames in grid(-s) grid size(-g)
+	
+	c. Should output:
+		i. MM file in "mm" folder
+
+4. Create the main simulation executable:
+	a. Run:
+		icc -O3 -qopenmp -mkl -o run.out main.c 
+
+5. Run the simulation:
+	a. Run: 
+
+		./run.out -c 1 -b 50 -a 10 -d 0.001 -t 100000 -p 1 -n 4 -r 0 -f 0.001 -s 8 -g 2.0 -i 0 -m 2 -h 1 -x 3 -y 3 -l 10 -o 1
+	
+	b. Parameters: polymer concentration(-c) # of monomers(-b) # of chains(-a) dt(-d) tmax(-t) trajectory # (-p) num_threads(-n) restart (-r) strain rate of flow(-f) # of flow frames in grid(-s) grid size(-g) starting iteration(-i) ending iteration(-m) Ncharges(-h) adjacent hop barrier (-x) nonadjacent hop barrier (-y) Debye length (-l) flow_flag(-o)
+	
+	*Make sure parameters match grid file*
+	
+	c. Should output:
+
+		i. In prop: CH file (charge index + displacements), E file (extension), MSD file (mean-squared displacement), REE file (end-to-end vector), RG file (radius of gyration tensor), and V file (viral stress tensor)
+
+		ii. In xyz: R file (entire simulation visual), RST file (restart file)
+
+	       iii. In txt: P file (list of parameters used in simulation)
+
+		iv. in res: RST file (restart file) 
+
+		v. in decomp: B and DC files (conformationally averaged TEA parameters)
+
+############################### Help ###############################
+
+Ask DJ (dww4@illinois.edu) or Neha (neha0408@illinois.edu)
