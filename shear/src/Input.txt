@@ -1,0 +1,14 @@
+spring = Hookean
+epsilon = 0.1
+kappab = 0.0
+kappas = 200
+qmax = 2
+total_strain = 10
+fixSeed = 0
+lambda_b = 3.59
+chargehop_type = 0
+MStep = 2
+MSDstart = 1
+
+
+
